@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+   
+}
+html {
+    height: 100%;
+}
+body {
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+
+}
+.container {
+    text-align: -webkit-center;
+}
+.title {
+    font-size: 3rem;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    color: #00fff3;
+    box-shadow: 0px 0px 15px 5px #00fff3;
+    width: 30%;
+}
+
+.calculator {
+    background-color: white;
+    width: 400px;
+    height: 600px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 15px 14px #9b52b5;
+}
+.display-container{
+    width: 100%;
+    height: 170px;
+    background-color: #77f7f2;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+.buttons-container{
+    width: 100%;
+    height: 430px;
+    padding: 15px;
+    background-color: #8a2be282;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+button {
+    font-size: 30px;
+    font-weight: 600;
+    border-style: none;
+    border-radius: 60px;
+    cursor: pointer;
+    background-color: #6900f5;;
+    color: #77f7f2;
+    font-family: monospace;
+    box-shadow: 0px 11px 15px 0px #9b52b5;
+    transition: all 0.2s;
+    
+}
+.blue {
+    background-color: #77f7f2;
+    color: #6900f5;
+}
+.operate{
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+.blue:hover{
+    background-color: #6900f5;
+    color: #77f7f2;
+    
+}
+button:hover{
+    background-color: #77f7f2;
+    color: #6900f5;
+    transform: translateY(-0.2rem);
+}
+/* .calculations{
+height: 85px;
+width: 100%;
+display: flex;
+justify-content: flex-end;
+} */
+.results{
+height: 85px;
+width: 100%;
+display: flex;
+justify-content: flex-end;
+}
+.calculate, .result {
+    font-size: 50px;
+    font-family: monospace;
+    margin: 10px;
+    color: #6900f5;
+    margin-top: 25px;
+}
+.equal {
+    font-size: 50px;
+    font-family: monospace;
+    margin: 10px;
+    color: #6900f5;
+    margin-right: 40px;
+    margin-top: 25px;
+    display: inline-block;
+}
