@@ -9,7 +9,8 @@ html {
     height: 100%;
 }
 body {
-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+   /* background: radial-gradient(circle, rgba(133,133,133,1) 0%, rgba(0,0,0,1) 100%); */
+   background: radial-gradient(circle, rgba(133,133,133,1) 0%, rgba(0,0,0,1) 100%);
 
 }
 .container {
@@ -19,8 +20,8 @@ background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100
     font-size: 3rem;
     margin-top: 30px;
     margin-bottom: 50px;
-    color: #00fff3;
-    box-shadow: 0px 0px 15px 5px #00fff3;
+    color: #EEEEEE;
+    box-shadow: 0px 0px 15px 5px #323232;
     width: 30%;
 }
 
@@ -29,22 +30,20 @@ background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100
     width: 400px;
     height: 600px;
     border-radius: 15px;
-    box-shadow: 0px 10px 15px 14px #9b52b5;
+    box-shadow: 0px 10px 15px 6px #323232;
 }
 .display-container{
     width: 100%;
     height: 170px;
-    background-color: #77f7f2;
+    background-color:rgb(34, 40, 49);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    display: flex;
-    justify-content: flex-end;
 }
 .buttons-container{
     width: 100%;
     height: 430px;
     padding: 15px;
-    background-color: #8a2be282;
+    background-color: #FFD369;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     display: grid;
@@ -57,29 +56,30 @@ button {
     border-style: none;
     border-radius: 60px;
     cursor: pointer;
-    background-color: #6900f5;;
-    color: #77f7f2;
+    background-color: #EEEEEE;
+    color: rgb(34, 40, 49);
     font-family: monospace;
-    box-shadow: 0px 11px 15px 0px #9b52b5;
+    box-shadow: 0px 7px 15px 0px #323232;
     transition: all 0.2s;
+    
     
 }
 .blue {
-    background-color: #77f7f2;
-    color: #6900f5;
+    background-color: rgb(34, 40, 49);
+    color: #EEEEEE;
 }
 .operate{
     grid-column-start: 3;
     grid-column-end: 5;
 }
 .blue:hover{
-    background-color: #6900f5;
-    color: #77f7f2;
+    background-color: #EEEEEE;
+    color: rgb(34, 40, 49);
     
 }
 button:hover{
-    background-color: #77f7f2;
-    color: #6900f5;
+    background-color: rgb(34, 40, 49);
+    color: #EEEEEE;
     transform: translateY(-0.2rem);
 }
 /* .calculations{
@@ -95,18 +95,15 @@ display: flex;
 justify-content: flex-end;
 }
 .calculate, .result {
-    font-size: 50px;
+    font-size: 39px;
     font-family: monospace;
     margin: 10px;
-    color: #6900f5;
+    color: #EEEEEE;
     margin-top: 25px;
+    overflow: hidden;
+    overflow-wrap: break-word;
 }
-.equal {
-    font-size: 50px;
-    font-family: monospace;
-    margin: 10px;
-    color: #6900f5;
-    margin-right: 40px;
-    margin-top: 25px;
-    display: inline-block;
+.calculate-div{
+    display: flex;
+    justify-content: flex-end;
 }
