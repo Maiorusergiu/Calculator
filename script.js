@@ -1,92 +1,113 @@
 
 let displayCalculate = document.querySelector(".calculate");
-const values = document.querySelectorAll(".operand");
-const operators = document.querySelectorAll(".operator");
-const equal = document.querySelector(".operate");
-const clear = document.querySelector(".clear");
-
-
 let displayResult = document.querySelector(".result");
-let firstNumberAdded = false;
-displayResult.textContent = 0;
-displayCalculate.textContent = 0;
-let firstNumber = 0;
-let firstNumberArray = [];
-let secondNumber = 0;
-let secondNumberArray = [];
-function getFirstNumber(){
-    //Iterate over the values
-for(let i = 0; i < values.length; i++){
-    //on click digit, add to the array and turn it into string
-    values[i].addEventListener('click', () => {
-        //if the first digit is zero, update to zero
-            if(firstNumberArray[0] === "0"){
-                displayResult.textContent = 0;
-                firstNumber = 0;
-                firstNumberArray = [];
-            }
-            if(!firstNumberAdded){
-                //if firstNumber is not added yet, add now and return it
-            firstNumberArray.push(values[i].textContent);
-            displayResult.textContent = firstNumberArray.toString().replaceAll(",", "");
-            firstNumber = Number(displayResult.textContent);
-            return firstNumber;
-            }
-          
-    })
-}
-}
-function getSecondNumber(){
-for(let i = 0; i < values.length; i++){
-    values[i].addEventListener('click', () => {
-            if(secondNumberArray[0] === "0"){
-                displayResult.textContent = 0;
-                secondNumber = 0;
-                secondNumberArray = [];
-            }
-            secondNumberArray.push(values[i].textContent);
-            displayResult.textContent = secondNumberArray.toString().replaceAll(",", "");
-            secondNumber = Number(displayResult.textContent);
-            return secondNumber;
-            
-    })
-}
-}
+const valueButtons = document.querySelectorAll(".operand");
+const operatorsButtons = document.querySelectorAll(".operator");
+const equalButton = document.querySelector(".operate");
+const clearButton = document.querySelector(".clear");
+const pointButton = document.querySelector(".point");
 
-getFirstNumber();
 
-function Operators() {
-for(let i = 0; i < operators.length;i++){
-    operators[i].addEventListener('click', () => {
-        if(firstNumber !== 0 && operators[i].textContent === "+"){
-            displayCalculate.textContent = firstNumber + "+"; //12+
-            displayResult.textContent = 0;
-            firstNumberAdded = true;
-            getSecondNumber(); //1
-            equal.addEventListener("click", () => {
-            displayCalculate.textContent = displayCalculate.textContent + secondNumber + "=";
-            displayResult.textContent = Operate(Add,firstNumber, secondNumber);
-            console.log(firstNumber, secondNumber);
-            
-            })
-            
+let firstOperand = '';
+let secondOperand = '';
+let currentOperation = undefined;
+let operationResult = null;
+
+valueButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        if(currentOperation === undefined){
+        AddFirstNumber(button.innerText);
+        updateDisplay();
+        }else{
+        AddSecondNumber(button.innerText);
+        updateDisplay();
+        }
+
+        
+    })
+})
+operatorsButtons.forEach(operator => {
+    operator.addEventListener('click', () => {
+        if(firstOperand !== ''){
+        setOperator(operator.innerText);
+        updateDisplay();
         }
     })
-}
-}
-Operators();
-clear.addEventListener("click", () => {
-    displayResult.textContent = 0;
-    displayCalculate.textContent = 0;
-    firstNumber = 0;
-    secondNumber = 0;
-    secondNumberArray = 0;
-    firstNumberArray = [];
 })
 
 
+function setOperator(operator){
+    currentOperation = operator.toString();
+}
+clearButton.addEventListener('click', Clear);
+function AddFirstNumber(number) {
+    if(number === "." && firstOperand.includes(".")){
+        return;
+    }
+    if(number === "." && firstOperand === "."){
+        firstOperand = 0;
+    }
+    firstOperand = firstOperand.toString() + number.toString();
+}
+function AddSecondNumber(number) {
+    if(number === "." && secondOperand.includes(".")){
+        return;
+    }
+  
+    secondOperand = secondOperand.toString() + number.toString();
+}
+function Clear() {
+    firstOperand = '';
+    secondOperand = '';
+    currentOperation = undefined;
+    operationResult = null;
+    displayResult.innerText = "0";
+    updateDisplay();
+}
+function Evaluate() {
+    equalButton.addEventListener("click", () => {
+        if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+            if(currentOperation === "÷" && secondOperand === "0"){
+                alert("You can't divide it by 0!");
+                Clear();
+            }
+            if(firstOperand === "."){
+                firstOperand = 0;
+            }
+            if(secondOperand === "."){
+                secondOperand = 0;
+            }
+            operationResult = Operate(currentOperation, firstOperand, secondOperand);
+            if(operationResult.toString().includes(".")){
+            operationResult = (Math.round(operationResult * 100) / 100).toFixed(2);
+            }
+            updateDisplay();
+            firstOperand = operationResult.toString();
+            secondOperand = '';
+            currentOperation = undefined;
+            
+            
+        }
+    })
+   
+}
+
+function updateDisplay() {
+    displayCalculate.innerText = firstOperand;
+    if(currentOperation !== undefined){
+        displayCalculate.innerText = firstOperand + "" + currentOperation + "" + secondOperand;
+    }
+    if(operationResult !== null){
+        displayResult.innerText = operationResult.toString();
+    }
+
+}
+Evaluate();
 function Add(a, b) {
 return a + b;
+}
+function Modulo(a, b){
+    return a % b;
 }
 function Subtract(a, b) {
     return a - b;
@@ -99,8 +120,24 @@ function Divide(a, b) {
 return a/b;
 }
 function Operate(operator, a, b) {
-return operator(a, b);
+    a = Number(a);
+    b = Number(b);
+    switch(operator){
+    case "+":
+        return Add(a, b);
+    case "-":
+        return Subtract(a, b);
+    case "x":
+        return Multiply(a, b);
+    case "%":
+        return Modulo(a, b);
+    case "÷":
+        if(b === 0){
+            return null;
+        }else
+        return Divide(a, b);
+    default: return null;
 }
-
+}
 //console.log(Operate(Add, 2, 3))
 
