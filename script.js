@@ -14,6 +14,7 @@ let secondOperand = '';
 let currentOperation = undefined;
 let operationResult = null;
 
+function IterateThroughValues(){
 valueButtons.forEach(button => {
     button.addEventListener('click', () => {
         if(currentOperation === undefined){
@@ -28,6 +29,7 @@ valueButtons.forEach(button => {
     })
     AddNumbersByKey(button)
 })
+}
 function AddNumbersByKey(button) {
     document.addEventListener('keydown', function(event) {
         if(currentOperation === undefined){
@@ -44,6 +46,7 @@ function AddNumbersByKey(button) {
     });
 
 }
+function DeleteCurrentDigitByKey(){
 document.addEventListener("keydown", (event) => {
     if(event.key === "Backspace"){
         if(firstOperand !== '' && currentOperation === undefined && secondOperand === ''){
@@ -59,16 +62,20 @@ document.addEventListener("keydown", (event) => {
         updateDisplay();
     }
 })
+}
+function ClearByKey() {
 document.addEventListener("keydown", (event) => {
     if(event.key === "Delete"){
         Clear();
     }
 })
+}
 
 function setOperator(operator){
     currentOperation = operator.toString();
 }
 
+function IterateThroughOperators() {
 operatorsButtons.forEach(operator => {
     operator.addEventListener('click', () => {
         if(firstOperand !== ''){
@@ -86,6 +93,32 @@ operatorsButtons.forEach(operator => {
     }
     })
     
+})
+}
+function TypeCurrentNegativeOrPositiveNumber(){
+    document.addEventListener("keydown", (event) => {
+        if(event.key === "y"){
+            if(currentOperation === undefined){
+                if(firstOperand.includes("-")){
+                    firstOperand = firstOperand.toString().replace("-", "");
+                    updateDisplay();
+                }else
+                {
+                firstOperand = "-" + firstOperand.toString();
+                updateDisplay();
+                }
+            }else {
+                if(secondOperand.includes("-")){
+                    secondOperand = secondOperand.toString().replace("-", "");
+                    updateDisplay();
+                }else
+                {
+                secondOperand = "" + "-" + secondOperand.toString();
+                updateDisplay();
+                }
+            }
+        }
+
 })
 toggleButton.addEventListener("click", () => {
     if(currentOperation === undefined){
@@ -108,7 +141,11 @@ toggleButton.addEventListener("click", () => {
     }
 }
 })
-clearButton.addEventListener('click', Clear);
+}
+function ClearEverythingButton(){
+    clearButton.addEventListener('click', Clear);
+}
+
 function AddFirstNumber(number) {
     if(number === "." && firstOperand.includes(".")){
         return;
@@ -250,6 +287,12 @@ function Operate(operator, a, b) {
 }
 
 Evaluate();
+DeleteCurrentDigitByKey();
+ClearByKey();
+IterateThroughOperators();
+TypeCurrentNegativeOrPositiveNumber();
+ClearEverythingButton();
+IterateThroughValues();
 
 
 
