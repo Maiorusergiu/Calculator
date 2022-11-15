@@ -6,6 +6,7 @@ const operatorsButtons = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".operate");
 const clearButton = document.querySelector(".clear");
 const pointButton = document.querySelector(".point");
+const toggleButton = document.querySelector(".toggle");
 
 
 let firstOperand = '';
@@ -22,10 +23,52 @@ valueButtons.forEach(button => {
         AddSecondNumber(button.innerText);
         updateDisplay();
         }
-
+       
         
     })
+    AddNumbersByKey(button)
 })
+function AddNumbersByKey(button) {
+    document.addEventListener('keydown', function(event) {
+        if(currentOperation === undefined){
+        if(event.key === button.innerText) {
+            AddFirstNumber(button.innerText);
+            updateDisplay();
+        }
+    }else {
+        if(event.key === button.innerText){
+        AddSecondNumber(button.innerText);
+        updateDisplay();
+        }
+        }
+    });
+
+}
+document.addEventListener("keydown", (event) => {
+    if(event.key === "Backspace"){
+        if(firstOperand !== '' && currentOperation === undefined && secondOperand === ''){
+            firstOperand = firstOperand.slice(0, -1).toString();
+        }
+        if(firstOperand !== '' && currentOperation !== undefined && secondOperand === ''){
+            currentOperation = '';
+            currentOperation = undefined;
+        }
+        if(firstOperand !== '' && currentOperation !== undefined && secondOperand !== ''){
+            secondOperand = secondOperand.slice(0, -1).toString();
+        }
+        updateDisplay();
+    }
+})
+document.addEventListener("keydown", (event) => {
+    if(event.key === "Delete"){
+        Clear();
+    }
+})
+
+function setOperator(operator){
+    currentOperation = operator.toString();
+}
+
 operatorsButtons.forEach(operator => {
     operator.addEventListener('click', () => {
         if(firstOperand !== ''){
@@ -33,12 +76,38 @@ operatorsButtons.forEach(operator => {
         updateDisplay();
         }
     })
+    document.addEventListener('keydown', function(event) {
+        if(firstOperand !== ''){
+           
+        if(event.key === operator.innerText) {
+            setOperator(operator.innerText);
+            updateDisplay();
+        }
+    }
+    })
+    
 })
-
-
-function setOperator(operator){
-    currentOperation = operator.toString();
+toggleButton.addEventListener("click", () => {
+    if(currentOperation === undefined){
+    if(firstOperand.includes("-")){
+        firstOperand = firstOperand.toString().replace("-", "");
+        updateDisplay();
+    }else
+    {
+    firstOperand = "-" + firstOperand.toString();
+    updateDisplay();
+    }
+}else {
+    if(secondOperand.includes("-")){
+        secondOperand = secondOperand.toString().replace("-", "");
+        updateDisplay();
+    }else
+    {
+    secondOperand = "" + "-" + secondOperand.toString();
+    updateDisplay();
+    }
 }
+})
 clearButton.addEventListener('click', Clear);
 function AddFirstNumber(number) {
     if(number === "." && firstOperand.includes(".")){
@@ -47,13 +116,14 @@ function AddFirstNumber(number) {
     if(number === "." && firstOperand === "."){
         firstOperand = 0;
     }
+     
     firstOperand = firstOperand.toString() + number.toString();
 }
 function AddSecondNumber(number) {
     if(number === "." && secondOperand.includes(".")){
         return;
     }
-  
+    
     secondOperand = secondOperand.toString() + number.toString();
 }
 function Clear() {
@@ -67,9 +137,18 @@ function Clear() {
 function Evaluate() {
     equalButton.addEventListener("click", () => {
         if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
-            if(currentOperation === "÷" && secondOperand === "0"){
-                alert("You can't divide it by 0!");
+            if(Number(secondOperand.substring(0, secondOperand.length)) === 0){
+                secondOperand = "0";
+            }
+            if(currentOperation === "/" && secondOperand === "0"){
+                alert("You can't divide it by 0 dumbass!");
                 Clear();
+                return;
+            }
+            if(currentOperation === "%" && secondOperand === "0"){
+                alert("You can't divide it by 0 dumbass!");
+                Clear();
+                return;
             }
             if(firstOperand === "."){
                 firstOperand = 0;
@@ -85,11 +164,42 @@ function Evaluate() {
             firstOperand = operationResult.toString();
             secondOperand = '';
             currentOperation = undefined;
-            
-            
         }
     })
-   
+    
+    document.addEventListener("keydown", (event) => {
+        if(event.key === "Enter"){
+        if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+            if(Number(secondOperand.substring(0, secondOperand.length)) === 0){
+                secondOperand = "0";
+            }
+            if(currentOperation === "/" && secondOperand === "0"){
+                alert("You can't divide it by 0 dumbass!");
+                Clear();
+                return;
+            }
+            if(currentOperation === "%" && secondOperand === "0"){
+                alert("You can't divide it by 0 dumbass!");
+                Clear();
+                return;
+            }
+            if(firstOperand === "."){
+                firstOperand = 0;
+            }
+            if(secondOperand === "."){
+                secondOperand = 0;
+            }
+            operationResult = Operate(currentOperation, firstOperand, secondOperand);
+            if(operationResult.toString().includes(".")){
+            operationResult = (Math.round(operationResult * 100) / 100).toFixed(2);
+            }
+            updateDisplay();
+            firstOperand = operationResult.toString();
+            secondOperand = '';
+            currentOperation = undefined;
+        }
+    }
+    })
 }
 
 function updateDisplay() {
@@ -102,7 +212,6 @@ function updateDisplay() {
     }
 
 }
-Evaluate();
 function Add(a, b) {
 return a + b;
 }
@@ -131,7 +240,7 @@ function Operate(operator, a, b) {
         return Multiply(a, b);
     case "%":
         return Modulo(a, b);
-    case "÷":
+    case "/":
         if(b === 0){
             return null;
         }else
@@ -139,5 +248,9 @@ function Operate(operator, a, b) {
     default: return null;
 }
 }
-//console.log(Operate(Add, 2, 3))
+
+Evaluate();
+
+
+
 
