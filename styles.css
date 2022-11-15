@@ -131,5 +131,20 @@ justify-content: flex-end;
  .title{
     font-size: 2.5rem;
  }
+ small {
+    font-size: 19px;
+ }
     
 }
+
+small {
+    color: #eeeeeec4;
+}
+.footer-section{
+    margin-top: 40px;
+    font-size: 25px;
+    bottom: 0px;
+
+}
+
+
