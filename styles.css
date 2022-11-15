@@ -107,3 +107,29 @@ justify-content: flex-end;
     justify-content: flex-end;
     height: 85px;
 }
+@media screen and (max-width: 870px){
+    .title{
+        width: 40%;
+    }
+    
+}
+@media screen and (max-width: 600px){
+    .title{
+        width: 80%;
+    }
+    
+}
+
+@media screen and (max-width: 500px){
+ .calculator{
+    width: 330px;
+    height: 516px;
+ }
+ .buttons-container{
+    height: 345px;
+ }
+ .title{
+    font-size: 2.5rem;
+ }
+    
+}
