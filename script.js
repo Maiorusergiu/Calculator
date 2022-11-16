@@ -5,6 +5,7 @@ const valueButtons = document.querySelectorAll(".operand");
 const operatorsButtons = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".operate");
 const clearButton = document.querySelector(".clear");
+const clearEntryButton = document.querySelector(".clear-entry");
 const pointButton = document.querySelector(".point");
 const toggleButton = document.querySelector(".toggle");
 
@@ -63,6 +64,21 @@ document.addEventListener("keydown", (event) => {
     }
 })
 }
+function ClearEntry() {
+    clearEntryButton.addEventListener("click", () => {
+            if(firstOperand !== '' && currentOperation === undefined && secondOperand === ''){
+                firstOperand = firstOperand.slice(0, -1).toString();
+            }
+            if(firstOperand !== '' && currentOperation !== undefined && secondOperand === ''){
+                currentOperation = '';
+                currentOperation = undefined;
+            }
+            if(firstOperand !== '' && currentOperation !== undefined && secondOperand !== ''){
+                secondOperand = secondOperand.slice(0, -1).toString();
+            }
+            updateDisplay();
+        })
+}
 function ClearByKey() {
 document.addEventListener("keydown", (event) => {
     if(event.key === "Delete"){
@@ -102,7 +118,7 @@ function TypeCurrentNegativeOrPositiveNumber(){
                 if(firstOperand.includes("-")){
                     firstOperand = firstOperand.toString().replace("-", "");
                     updateDisplay();
-                }else
+                }else if(!firstOperand.includes("-") && firstOperand !== "")
                 {
                 firstOperand = "-" + firstOperand.toString();
                 updateDisplay();
@@ -111,7 +127,7 @@ function TypeCurrentNegativeOrPositiveNumber(){
                 if(secondOperand.includes("-")){
                     secondOperand = secondOperand.toString().replace("-", "");
                     updateDisplay();
-                }else
+                }else if(!secondOperand.includes("-") && secondOperand !== "")
                 {
                 secondOperand = "" + "-" + secondOperand.toString();
                 updateDisplay();
@@ -120,12 +136,13 @@ function TypeCurrentNegativeOrPositiveNumber(){
         }
 
 })
+
 toggleButton.addEventListener("click", () => {
     if(currentOperation === undefined){
     if(firstOperand.includes("-")){
         firstOperand = firstOperand.toString().replace("-", "");
         updateDisplay();
-    }else
+    }else if(!firstOperand.includes("-") && firstOperand !== "")
     {
     firstOperand = "-" + firstOperand.toString();
     updateDisplay();
@@ -134,7 +151,7 @@ toggleButton.addEventListener("click", () => {
     if(secondOperand.includes("-")){
         secondOperand = secondOperand.toString().replace("-", "");
         updateDisplay();
-    }else
+    }else if(!secondOperand.includes("-") && secondOperand !== "")
     {
     secondOperand = "" + "-" + secondOperand.toString();
     updateDisplay();
@@ -168,7 +185,7 @@ function Clear() {
     secondOperand = '';
     currentOperation = undefined;
     operationResult = null;
-    displayResult.innerText = "0";
+    displayResult.innerText = "";
     updateDisplay();
 }
 function Evaluate() {
@@ -193,14 +210,22 @@ function Evaluate() {
             if(secondOperand === "."){
                 secondOperand = 0;
             }
+          
             operationResult = Operate(currentOperation, firstOperand, secondOperand);
-            if(operationResult.toString().includes(".")){
-            operationResult = (Math.round(operationResult * 100) / 100).toFixed(2);
-            }
+            
+            // if(operationResult.toString().includes(".")){
+            // operationResult = (Math.round(operationResult * 100) / 100).toFixed(4);
+            // }
             updateDisplay();
             firstOperand = operationResult.toString();
+            if(firstOperand === "0"){
+                firstOperand = "";
+                //if the first operand is zero, change it to empty
+                //because we don't want the next values to be like "0875" with zero on the first position
+            }
             secondOperand = '';
             currentOperation = undefined;
+            operationResult = null;
         }
     })
     
@@ -227,25 +252,37 @@ function Evaluate() {
                 secondOperand = 0;
             }
             operationResult = Operate(currentOperation, firstOperand, secondOperand);
-            if(operationResult.toString().includes(".")){
-            operationResult = (Math.round(operationResult * 100) / 100).toFixed(2);
-            }
+            // if(operationResult.toString().includes(".")){
+            // operationResult = (Math.round(operationResult * 100) / 100).toFixed(2);
+            // }
             updateDisplay();
             firstOperand = operationResult.toString();
             secondOperand = '';
             currentOperation = undefined;
+            operationResult = null;
+            
         }
     }
     })
 }
-
+//daca am toate 3 valide si apas pe un operator, sa se efectueze operatia, sa dea rezultatul si sa afiseze rezultatul urmat
+//de acel operator
 function updateDisplay() {
     displayCalculate.innerText = firstOperand;
     if(currentOperation !== undefined){
+        if(firstOperand.toString().charAt(firstOperand.length - 1) === "." && firstOperand.indexOf(".") !== 0){
+            firstOperand = firstOperand.replace(".", "")
+        }
+        if((secondOperand.toString().charAt(secondOperand.length - 1) === ".") && operationResult !== null){
+            secondOperand = secondOperand.replace(".", "")
+        }
         displayCalculate.innerText = firstOperand + "" + currentOperation + "" + secondOperand;
     }
     if(operationResult !== null){
         displayResult.innerText = operationResult.toString();
+    }
+    if(operationResult === null){
+        displayResult.innerText = "";
     }
 
 }
@@ -293,6 +330,7 @@ IterateThroughOperators();
 TypeCurrentNegativeOrPositiveNumber();
 ClearEverythingButton();
 IterateThroughValues();
+ClearEntry();
 
 
 
