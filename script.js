@@ -25,7 +25,6 @@ valueButtons.forEach(button => {
         AddSecondNumber(button.innerText);
         updateDisplay();
         }
-       
         
     })
     AddNumbersByKey(button)
@@ -67,6 +66,9 @@ document.addEventListener("keydown", (event) => {
 function ClearEntry() {
     clearEntryButton.addEventListener("click", () => {
             if(firstOperand !== '' && currentOperation === undefined && secondOperand === ''){
+                if(firstOperand.includes("-")  && firstOperand.length === 2){
+                    firstOperand = firstOperand.replace("-", "");
+                }
                 firstOperand = firstOperand.slice(0, -1).toString();
             }
             if(firstOperand !== '' && currentOperation !== undefined && secondOperand === ''){
@@ -74,6 +76,9 @@ function ClearEntry() {
                 currentOperation = undefined;
             }
             if(firstOperand !== '' && currentOperation !== undefined && secondOperand !== ''){
+                if(secondOperand.includes("-") && secondOperand.length === 2){
+                    secondOperand = secondOperand.replace("-", "");
+                }
                 secondOperand = secondOperand.slice(0, -1).toString();
             }
             updateDisplay();
@@ -212,10 +217,13 @@ function Evaluate() {
             }
           
             operationResult = Operate(currentOperation, firstOperand, secondOperand);
+            if(firstOperand.indexOf(".") === 0 && firstOperand.length > 1){
+                firstOperand = "0" + firstOperand.toString();
+            }
+            if(secondOperand.indexOf(".") === 0 && secondOperand.length > 1){
+                secondOperand = "0" + secondOperand.toString();
+            }
             
-            // if(operationResult.toString().includes(".")){
-            // operationResult = (Math.round(operationResult * 100) / 100).toFixed(4);
-            // }
             updateDisplay();
             firstOperand = operationResult.toString();
             if(firstOperand === "0"){
@@ -284,7 +292,44 @@ function updateDisplay() {
     if(operationResult === null){
         displayResult.innerText = "";
     }
+    
+    let totalLength = firstOperand.length + secondOperand.length;
+    let totalResultLength = displayResult.innerText.length;
+    IgnoreOverflow(totalLength, displayCalculate, totalResultLength, displayResult);
+}
+function IgnoreOverflow(totalLength, displayText, resultLength, resultDisplay) {
+    
+    if(totalLength >= 17){
+        displayText.style.fontSize = "25px";
+    }
+    if(totalLength >= 54)
+    {
+        displayText.style.fontSize = "20px";
+    }
+    if(totalLength >= 70)
+    {
+        displayText.style.fontSize = "15px";
+    }
+    if(totalLength < 17)
+    {
+        displayText.style.fontSize = "39px";
+    }
 
+    if(resultLength >= 17){
+        resultDisplay.style.fontSize = "25px";
+    }
+    if(resultLength >= 54)
+    {
+        resultDisplay.style.fontSize = "20px";
+    }
+    if(resultLength >= 70)
+    {
+        resultDisplay.style.fontSize = "15px";
+    }
+    if(resultLength < 17)
+    {
+        resultDisplay.style.fontSize = "39px";
+    }
 }
 function Add(a, b) {
 return a + b;
@@ -322,7 +367,6 @@ function Operate(operator, a, b) {
     default: return null;
 }
 }
-
 Evaluate();
 DeleteCurrentDigitByKey();
 ClearByKey();
@@ -331,6 +375,9 @@ TypeCurrentNegativeOrPositiveNumber();
 ClearEverythingButton();
 IterateThroughValues();
 ClearEntry();
+IgnoreOverflow();
+
+// .3 + .3 +> 0.3 + 0.3 
 
 
 

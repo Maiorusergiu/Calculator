@@ -101,7 +101,7 @@ justify-content: flex-end;
 .calculate, .result {
     font-size: 39px;
     font-family: monospace;
-    margin: 10px;
+    margin: 7px;
     color: #EEEEEE;
     margin-top: 25px;
     overflow: hidden;
