@@ -139,9 +139,11 @@ justify-content: flex-end;
  small {
     font-size: 19px;
  }
-    
-}
+ .calculate, .result {
+    font-size: 34px;
+ }
 
+}
 small {
     color: #eeeeeec4;
 }

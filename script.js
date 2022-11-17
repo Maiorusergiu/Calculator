@@ -69,6 +69,10 @@ function ClearEntry() {
                 if(firstOperand.includes("-")  && firstOperand.length === 2){
                     firstOperand = firstOperand.replace("-", "");
                 }
+                
+                if(firstOperand.includes("-")  && firstOperand.charAt(1) === "."){
+                    firstOperand = firstOperand.replace("-", "");
+                }
                 firstOperand = firstOperand.slice(0, -1).toString();
             }
             if(firstOperand !== '' && currentOperation !== undefined && secondOperand === ''){
@@ -77,6 +81,9 @@ function ClearEntry() {
             }
             if(firstOperand !== '' && currentOperation !== undefined && secondOperand !== ''){
                 if(secondOperand.includes("-") && secondOperand.length === 2){
+                    secondOperand = secondOperand.replace("-", "");
+                }
+                if(secondOperand.includes("-")  && secondOperand.charAt(1) === "."){
                     secondOperand = secondOperand.replace("-", "");
                 }
                 secondOperand = secondOperand.slice(0, -1).toString();
@@ -95,6 +102,7 @@ document.addEventListener("keydown", (event) => {
 function setOperator(operator){
     currentOperation = operator.toString();
 }
+
 
 function IterateThroughOperators() {
 operatorsButtons.forEach(operator => {
@@ -123,7 +131,7 @@ function TypeCurrentNegativeOrPositiveNumber(){
                 if(firstOperand.includes("-")){
                     firstOperand = firstOperand.toString().replace("-", "");
                     updateDisplay();
-                }else if(!firstOperand.includes("-") && firstOperand !== "")
+                }else if(!firstOperand.includes("-") && firstOperand !== "" && firstOperand.toString().charAt(firstOperand.length - 1) !== ".")
                 {
                 firstOperand = "-" + firstOperand.toString();
                 updateDisplay();
@@ -147,7 +155,7 @@ toggleButton.addEventListener("click", () => {
     if(firstOperand.includes("-")){
         firstOperand = firstOperand.toString().replace("-", "");
         updateDisplay();
-    }else if(!firstOperand.includes("-") && firstOperand !== "")
+    }else if(!firstOperand.includes("-") && firstOperand !== "" && firstOperand.toString().charAt(firstOperand.length - 1) !== ".")
     {
     firstOperand = "-" + firstOperand.toString();
     updateDisplay();
@@ -156,7 +164,7 @@ toggleButton.addEventListener("click", () => {
     if(secondOperand.includes("-")){
         secondOperand = secondOperand.toString().replace("-", "");
         updateDisplay();
-    }else if(!secondOperand.includes("-") && secondOperand !== "")
+    }else if(!secondOperand.includes("-") && secondOperand !== "" && secondOperand.toString().charAt(secondOperand.length - 1) !== ".")
     {
     secondOperand = "" + "-" + secondOperand.toString();
     updateDisplay();
@@ -217,10 +225,10 @@ function Evaluate() {
             }
           
             operationResult = Operate(currentOperation, firstOperand, secondOperand);
-            if(firstOperand.indexOf(".") === 0 && firstOperand.length > 1){
+            if(firstOperand.toString().indexOf(".") === 0 && firstOperand.length > 1){
                 firstOperand = "0" + firstOperand.toString();
             }
-            if(secondOperand.indexOf(".") === 0 && secondOperand.length > 1){
+            if(secondOperand.toString().indexOf(".") === 0 && secondOperand.length > 1){
                 secondOperand = "0" + secondOperand.toString();
             }
             
@@ -294,39 +302,74 @@ function updateDisplay() {
     }
     
     let totalLength = firstOperand.length + secondOperand.length;
+    if(currentOperation !== undefined){
+        totalLength = totalLength + 1;
+    }
     let totalResultLength = displayResult.innerText.length;
     IgnoreOverflow(totalLength, displayCalculate, totalResultLength, displayResult);
 }
 function IgnoreOverflow(totalLength, displayText, resultLength, resultDisplay) {
-    
-    if(totalLength >= 17){
+    let myMediaQuery = window.matchMedia('(max-width: 500px)');
+    if(totalLength >= 15 && myMediaQuery.matches){
         displayText.style.fontSize = "25px";
     }
-    if(totalLength >= 54)
+    if(totalLength >= 43 && myMediaQuery.matches)
     {
         displayText.style.fontSize = "20px";
     }
-    if(totalLength >= 70)
+    if(totalLength >= 55 && myMediaQuery.matches)
     {
         displayText.style.fontSize = "15px";
     }
-    if(totalLength < 17)
+    if(totalLength < 15 && myMediaQuery.matches)
+    {
+        displayText.style.fontSize = "39px";
+    }
+    if(resultLength < 16 && myMediaQuery.matches)
+    {
+        displayResult.style.fontSize = "39px";
+    }
+    if(resultLength >= 17 && myMediaQuery.matches){
+        resultDisplay.style.fontSize = "25px";
+    }
+    if(resultLength >= 45 && myMediaQuery.matches)
+    {
+        resultDisplay.style.fontSize = "20px";
+    }
+    if(resultLength >= 57 && myMediaQuery.matches)
+    {
+        resultDisplay.style.fontSize = "15px";
+    }
+
+    //Without Media Query
+    if(totalLength >= 17 && !myMediaQuery.matches){
+        displayText.style.fontSize = "25px";
+    }
+    if(totalLength >= 54 && !myMediaQuery.matches)
+    {
+        displayText.style.fontSize = "20px";
+    }
+    if(totalLength >= 70 && !myMediaQuery.matches)
+    {
+        displayText.style.fontSize = "15px";
+    }
+    if(totalLength < 17 && !myMediaQuery.matches)
     {
         displayText.style.fontSize = "39px";
     }
 
-    if(resultLength >= 17){
+    if(resultLength >= 17 && !myMediaQuery.matches){
         resultDisplay.style.fontSize = "25px";
     }
-    if(resultLength >= 54)
+    if(resultLength >= 54 && !myMediaQuery.matches)
     {
         resultDisplay.style.fontSize = "20px";
     }
-    if(resultLength >= 70)
+    if(resultLength >= 70 && !myMediaQuery.matches)
     {
         resultDisplay.style.fontSize = "15px";
     }
-    if(resultLength < 17)
+    if(resultLength < 17 && !myMediaQuery.matches)
     {
         resultDisplay.style.fontSize = "39px";
     }
@@ -376,8 +419,6 @@ ClearEverythingButton();
 IterateThroughValues();
 ClearEntry();
 IgnoreOverflow();
-
-// .3 + .3 +> 0.3 + 0.3 
 
 
 
