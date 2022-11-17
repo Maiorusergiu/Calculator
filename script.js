@@ -140,7 +140,7 @@ function TypeCurrentNegativeOrPositiveNumber(){
                 if(secondOperand.includes("-")){
                     secondOperand = secondOperand.toString().replace("-", "");
                     updateDisplay();
-                }else if(!secondOperand.includes("-") && secondOperand !== "")
+                }else if(!secondOperand.includes("-") && secondOperand !== "" && secondOperand.toString().charAt(secondOperand.length - 1) !== ".")
                 {
                 secondOperand = "" + "-" + secondOperand.toString();
                 updateDisplay();
@@ -310,7 +310,7 @@ function updateDisplay() {
 }
 function IgnoreOverflow(totalLength, displayText, resultLength, resultDisplay) {
     let myMediaQuery = window.matchMedia('(max-width: 500px)');
-    if(totalLength >= 15 && myMediaQuery.matches){
+    if(totalLength >= 13 && myMediaQuery.matches){
         displayText.style.fontSize = "25px";
     }
     if(totalLength >= 43 && myMediaQuery.matches)
@@ -321,7 +321,7 @@ function IgnoreOverflow(totalLength, displayText, resultLength, resultDisplay) {
     {
         displayText.style.fontSize = "15px";
     }
-    if(totalLength < 15 && myMediaQuery.matches)
+    if(totalLength < 13 && myMediaQuery.matches)
     {
         displayText.style.fontSize = "39px";
     }
