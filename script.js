@@ -313,11 +313,11 @@ function IgnoreOverflow(totalLength, displayText, resultLength, resultDisplay) {
     if(totalLength >= 13 && myMediaQuery.matches){
         displayText.style.fontSize = "25px";
     }
-    if(totalLength >= 43 && myMediaQuery.matches)
+    if(totalLength >= 38 && myMediaQuery.matches)
     {
         displayText.style.fontSize = "20px";
     }
-    if(totalLength >= 55 && myMediaQuery.matches)
+    if(totalLength >= 47 && myMediaQuery.matches)
     {
         displayText.style.fontSize = "15px";
     }

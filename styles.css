@@ -145,6 +145,9 @@ justify-content: flex-end;
  .calculate{
     margin-bottom: 0px;
  }
+ .calculate-div {
+    height: 90px;
+ }
 
 }
 small {
