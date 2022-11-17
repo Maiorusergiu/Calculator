@@ -142,6 +142,9 @@ justify-content: flex-end;
  .calculate, .result {
     font-size: 34px;
  }
+ .calculate{
+    margin-bottom: 0px;
+ }
 
 }
 small {
