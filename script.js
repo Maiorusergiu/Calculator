@@ -325,18 +325,18 @@ function IgnoreOverflow(totalLength, displayText, resultLength, resultDisplay) {
     {
         displayText.style.fontSize = "39px";
     }
-    if(resultLength < 16 && myMediaQuery.matches)
+    if(resultLength < 13 && myMediaQuery.matches)
     {
         displayResult.style.fontSize = "39px";
     }
-    if(resultLength >= 17 && myMediaQuery.matches){
+    if(resultLength >= 13 && myMediaQuery.matches){
         resultDisplay.style.fontSize = "25px";
     }
-    if(resultLength >= 45 && myMediaQuery.matches)
+    if(resultLength >= 38 && myMediaQuery.matches)
     {
         resultDisplay.style.fontSize = "20px";
     }
-    if(resultLength >= 57 && myMediaQuery.matches)
+    if(resultLength >= 47 && myMediaQuery.matches)
     {
         resultDisplay.style.fontSize = "15px";
     }
