@@ -50,6 +50,13 @@ function DeleteCurrentDigitByKey(){
 document.addEventListener("keydown", (event) => {
     if(event.key === "Backspace"){
         if(firstOperand !== '' && currentOperation === undefined && secondOperand === ''){
+            if(firstOperand.includes("-")  && firstOperand.length === 2){
+                firstOperand = firstOperand.replace("-", "");
+            }
+            
+            if(firstOperand.includes("-")  && firstOperand.charAt(1) === "." && firstOperand.length <=3){
+                firstOperand = firstOperand.replace("-", "");
+            }
             firstOperand = firstOperand.slice(0, -1).toString();
         }
         if(firstOperand !== '' && currentOperation !== undefined && secondOperand === ''){
@@ -57,6 +64,12 @@ document.addEventListener("keydown", (event) => {
             currentOperation = undefined;
         }
         if(firstOperand !== '' && currentOperation !== undefined && secondOperand !== ''){
+            if(secondOperand.includes("-") && secondOperand.length === 2){
+                secondOperand = secondOperand.replace("-", "");
+            }
+            if(secondOperand.includes("-")  && secondOperand.charAt(1) === "." && secondOperand.length <=3){
+                secondOperand = secondOperand.replace("-", "");
+            }
             secondOperand = secondOperand.slice(0, -1).toString();
         }
         updateDisplay();
@@ -70,7 +83,7 @@ function ClearEntry() {
                     firstOperand = firstOperand.replace("-", "");
                 }
                 
-                if(firstOperand.includes("-")  && firstOperand.charAt(1) === "."){
+                if(firstOperand.includes("-")  && firstOperand.charAt(1) === "." && firstOperand.length <=3){
                     firstOperand = firstOperand.replace("-", "");
                 }
                 firstOperand = firstOperand.slice(0, -1).toString();
@@ -83,7 +96,7 @@ function ClearEntry() {
                 if(secondOperand.includes("-") && secondOperand.length === 2){
                     secondOperand = secondOperand.replace("-", "");
                 }
-                if(secondOperand.includes("-")  && secondOperand.charAt(1) === "."){
+                if(secondOperand.includes("-")  && secondOperand.charAt(1) === "." && secondOperand.length <=3){
                     secondOperand = secondOperand.replace("-", "");
                 }
                 secondOperand = secondOperand.slice(0, -1).toString();
