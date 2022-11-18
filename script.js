@@ -121,7 +121,14 @@ function IterateThroughOperators() {
 operatorsButtons.forEach(operator => {
     operator.addEventListener('click', () => {
         if(firstOperand !== ''){
+        
         setOperator(operator.innerText);
+         if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+            operationResult = Operate(currentOperation, firstOperand, secondOperand);
+            firstOperand = operationResult.toString();
+            currentOperation = operator.innerText;
+            secondOperand = '';
+        }
         updateDisplay();
         }
     })
