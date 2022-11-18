@@ -121,9 +121,10 @@ function IterateThroughOperators() {
 operatorsButtons.forEach(operator => {
     operator.addEventListener('click', () => {
         if(firstOperand !== ''){
-        
+        if(currentOperation === undefined){
         setOperator(operator.innerText);
-         if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+        }else if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+         
             operationResult = Operate(currentOperation, firstOperand, secondOperand);
             firstOperand = operationResult.toString();
             currentOperation = operator.innerText;
@@ -136,13 +137,15 @@ operatorsButtons.forEach(operator => {
     document.addEventListener('keydown', function(event) {
         if(firstOperand !== ''){
         if(event.key === operator.innerText) {
-            setOperator(operator.innerText);
-            if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
-                operationResult = Operate(currentOperation, firstOperand, secondOperand);
-                firstOperand = operationResult.toString();
-                currentOperation = operator.innerText;
-                secondOperand = '';
-            }
+            if(currentOperation === undefined){
+                setOperator(operator.innerText);
+                }else if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+                 
+                    operationResult = Operate(currentOperation, firstOperand, secondOperand);
+                    firstOperand = operationResult.toString();
+                    currentOperation = operator.innerText;
+                    secondOperand = '';
+                }
             updateDisplay();
             operationResult = null;
         }
