@@ -130,6 +130,9 @@ operatorsButtons.forEach(operator => {
             currentOperation = operator.innerText;
             secondOperand = '';
         }
+        if(firstOperand !== '' && currentOperation !== undefined){
+            setOperator(operator.innerText);
+        }
         updateDisplay();
         operationResult = null;
         }
@@ -146,6 +149,9 @@ operatorsButtons.forEach(operator => {
                     currentOperation = operator.innerText;
                     secondOperand = '';
                 }
+            if(firstOperand !== '' && currentOperation !== undefined){
+                    setOperator(operator.innerText);
+            }
             updateDisplay();
             operationResult = null;
         }
@@ -277,7 +283,6 @@ function Evaluate() {
     
     document.addEventListener("keydown", (event) => {
         if(event.key === "Enter"){
-        if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
             if(Number(secondOperand.substring(0, secondOperand.length)) === 0){
                 secondOperand = "0";
             }
@@ -297,18 +302,26 @@ function Evaluate() {
             if(secondOperand === "."){
                 secondOperand = 0;
             }
+          
             operationResult = Operate(currentOperation, firstOperand, secondOperand);
-            // if(operationResult.toString().includes(".")){
-            // operationResult = (Math.round(operationResult * 100) / 100).toFixed(2);
-            // }
+            if(firstOperand.toString().indexOf(".") === 0 && firstOperand.length > 1){
+                firstOperand = "0" + firstOperand.toString();
+            }
+            if(secondOperand.toString().indexOf(".") === 0 && secondOperand.length > 1){
+                secondOperand = "0" + secondOperand.toString();
+            }
+            
             updateDisplay();
             firstOperand = operationResult.toString();
+            if(firstOperand === "0"){
+                firstOperand = "";
+                //if the first operand is zero, change it to empty
+                //because we don't want the next values to be like "0875" with zero on the first position
+            }
             secondOperand = '';
             currentOperation = undefined;
             operationResult = null;
-            
         }
-    }
     })
 }
 //daca am toate 3 valide si apas pe un operator, sa se efectueze operatia, sa dea rezultatul si sa afiseze rezultatul urmat
