@@ -130,14 +130,21 @@ operatorsButtons.forEach(operator => {
             secondOperand = '';
         }
         updateDisplay();
+        operationResult = null;
         }
     })
     document.addEventListener('keydown', function(event) {
         if(firstOperand !== ''){
-           
         if(event.key === operator.innerText) {
             setOperator(operator.innerText);
+            if(firstOperand !== '' && secondOperand !== '' && currentOperation !== undefined){
+                operationResult = Operate(currentOperation, firstOperand, secondOperand);
+                firstOperand = operationResult.toString();
+                currentOperation = operator.innerText;
+                secondOperand = '';
+            }
             updateDisplay();
+            operationResult = null;
         }
     }
     })
