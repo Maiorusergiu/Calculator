@@ -129,7 +129,7 @@ justify-content: flex-end;
     }
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 600px){
  .calculator{
     width: 330px;
     height: 516px;
