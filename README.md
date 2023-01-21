@@ -22,7 +22,7 @@ This is my new Digital Calculator project to help you use basic math operations.
 
 ## 📷Screenshots
 
-![App Screenshot](/images/Calculator screenshot.png)
+![App Screenshot](/images/Calculator%20screenshot.png)
 
 
 ## ✍️Authors
